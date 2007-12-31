@@ -15,6 +15,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+PROJECT_NAME = slak-games
+prefix = /usr
+bin_prefix = $(prefix)/bin
+data_prefix = $(prefix)/share/$(PROJECT_NAME)
+
 BOOST_LIB = -lboost_filesystem-gcc41-1_34_1
 
 CPPFLAGS += -I. $(shell sdl-config --cflags)
@@ -40,3 +45,14 @@ tetris: $(GLUI_OBJS) $(TETRIS_OBJS)
 tidy:
 	rm -f *.o
 	rm -f `find . -name "*~"`
+
+install: tetris
+	install -d $(DESTDIR)$(bin_prefix)
+	install tetris $(DESTDIR)$(bin_prefix)
+	install -d $(DESTDIR)$(data_prefix)/bitmaps
+	install -m 644 media/bitmaps/*.bmp media/bitmaps/*.png $(DESTDIR)$(data_prefix)/bitmaps
+	install -d $(DESTDIR)$(data_prefix)/fonts
+	install -m 644 media/fonts/TouristTrap.ttf $(DESTDIR)$(data_prefix)/fonts
+	install -d $(DESTDIR)$(data_prefix)/sound
+	install -m 644 media/sound/*.wav $(DESTDIR)$(data_prefix)/sound
+
