@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <assert.h>
 #include <cstdlib>
 #include <cstring>
@@ -77,10 +96,10 @@ Tetrad Tetrad::rotate() const
 	    ncy = cx;
 	// allocate new tetrad
 	Tetrad rotated(w,h,ncx,ncy);
-	
+
 	// and copy the mask
 	for(int i = 0; i < w; i++)
-		for(int j = 0; j < h; j++) 
+		for(int j = 0; j < h; j++)
 			rotated.sq(i,j) = sq(j,w-i-1);
 	// return new tetrad
 	return rotated;
@@ -90,15 +109,15 @@ Tetrad Tetrad::make(shape s, int n_rot)
 {
 	Tetrad f;
 
-	if (s == RANDOM_SHAPE) 
+	if (s == RANDOM_SHAPE)
 		s = (shape)(rand() % N_SHAPES);
-	
+
 	switch(s) {
 	case O:
 		f = Tetrad(2,2);
-		f.sq(0,0) = BLUE; 
+		f.sq(0,0) = BLUE;
 		f.sq(0,1) = BLUE;
-		f.sq(1,0) = BLUE; 
+		f.sq(1,0) = BLUE;
 		f.sq(1,1) = BLUE;
 		break;
 	case I:
@@ -110,29 +129,29 @@ Tetrad Tetrad::make(shape s, int n_rot)
 		break;
 	case L:
 		f = Tetrad(2,3);
-		f.sq(0,2) = MAGENTA; 
-		f.sq(0,1) = MAGENTA; 
-		f.sq(0,0) = MAGENTA; 
+		f.sq(0,2) = MAGENTA;
+		f.sq(0,1) = MAGENTA;
+		f.sq(0,0) = MAGENTA;
 		f.sq(1,0) = MAGENTA;
 		break;
 	case J:
 		f = Tetrad(2,3);
 		f.sq(1,2) = BLACK;
 		f.sq(1,1) = BLACK;
-		f.sq(0,0) = BLACK; 
+		f.sq(0,0) = BLACK;
 		f.sq(1,0) = BLACK;
 		break;
 	case Z:
 		f = Tetrad(2,3);
 		f.sq(0,2) = CYAN;
-		f.sq(0,1) = CYAN; 
+		f.sq(0,1) = CYAN;
 		f.sq(1,1) = CYAN;
 		f.sq(1,0) = CYAN;
 		break;
 	case S:
 		f = Tetrad(2,3);
 		f.sq(1,2) = GREEN;
-		f.sq(0,1) = GREEN; 
+		f.sq(0,1) = GREEN;
 		f.sq(1,1) = GREEN;
 		f.sq(0,0) = GREEN;
 		break;
@@ -159,12 +178,12 @@ bool Tetrad::collides(int x, int y,const Tetrad& other)
 {
 	assert(mask);
 	assert(other.mask);
-	
+
 	if (x<0 || y<0 || x+other.width > width || y+other.height > height)
 		return true;
 
 	for(int i=0; i<other.width; i++)
-		for(int j=0; j<other.height; j++) 
+		for(int j=0; j<other.height; j++)
 			if (other.sq(i,j) != EMPTY &&
 			    sq(x+i,y+j) != EMPTY)
 				return true;
@@ -173,7 +192,7 @@ bool Tetrad::collides(int x, int y,const Tetrad& other)
 
 bool Tetrad::operator==(const Tetrad& other) const
 {
-	if (width != other.width || height != other.height) 
+	if (width != other.width || height != other.height)
 		return false;
 	if (mask && !other.mask || !mask && other.mask)
 		return false;
@@ -201,7 +220,7 @@ bool Tetrad::lineComplete(int j) const
 			return false;
 	return true;
 }
-			
+
 void Tetrad::delLine(int j)
 {
 	int i0 = j*width;

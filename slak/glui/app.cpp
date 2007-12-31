@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <assert.h>
 #include <iostream>
 #include <sstream>
@@ -27,8 +46,8 @@ std::map<std::string, int> App::user_event_dict;
 int App::free_event_id = AUTO_ALLOC_EV_BASE;
 
 
-App::App(int width, int height, Screen * start_screen) 
-	: cur_screen(start_screen), printed(0), go_on(true) 
+App::App(int width, int height, Screen * start_screen)
+	: cur_screen(start_screen), printed(0), go_on(true)
 {
 	assert(!theApp);
 	theApp = this;
@@ -39,8 +58,8 @@ App::App(int width, int height, Screen * start_screen)
 	SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
 	SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
 
-	
-	sdl_screen = SDL_SetVideoMode(width, height, 32, 
+
+	sdl_screen = SDL_SetVideoMode(width, height, 32,
 				      SDL_OPENGL/*|SDL_FULLSCREEN*/);
 	if (sdl_screen == NULL) {
 		std::cerr << "Error setting video mode: " << SDL_GetError();
@@ -59,9 +78,9 @@ int App::eventId(std::string name)
 	return user_event_dict[name];
 }
 
-SDL_TimerID App::push(std::string event_name, 
-		      void*data1, 
-		      void*data2, 
+SDL_TimerID App::push(std::string event_name,
+		      void*data1,
+		      void*data2,
 		      unsigned int delay)
 {
 	return push(eventId(event_name), data1, data2, delay);

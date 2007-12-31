@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <iostream>
 #include <sstream>
 #include <SDL.h>
@@ -14,7 +33,7 @@ using namespace slak::tetris;
 using namespace slak::glui;
 
 Renderer::Renderer(Game * g)
-	: g(g), score_lbl(TetrisApp::fontname, 24), 
+	: g(g), score_lbl(TetrisApp::fontname, 24),
 	  level_lbl(TetrisApp::fontname, 48)
 {
   // here we position the widgets and calculate the positions of the field
@@ -57,7 +76,7 @@ void Renderer::loadTextures()
 {
 	glGenTextures(N_STATES-1, (GLuint*)texture_ids);
 	for(int i=1; i<N_STATES; i++) {
-		std::string fname = 
+		std::string fname =
 			std::string("media/bitmaps/tetris-block-") +
 			color_names[i] + ".png";
 		SDL_Surface * img = IMG_Load(fname.c_str());
@@ -71,9 +90,9 @@ void Renderer::loadTextures()
 		glTexImage2D(GL_TEXTURE_2D,
 			     0, texfmt, img->w, img->h,
 			     0, fmt, tp, img->pixels);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 				GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 				GL_NEAREST);
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	}
@@ -113,7 +132,7 @@ void Renderer::drawBlocksPass(square_state st, float x0, float y0)
 	// loop over the game field and only draw the squares in given state
 	for(int j=0; j<g->field.height; j++) {
 		if (g->state == STROBE_FX_STATE
-		    && g->field.lineComplete(j) 
+		    && g->field.lineComplete(j)
 		    && ((g->fall_ticks / 10 % 2)==0))
 			continue;
 		for(int i=0; i<g->field.width; i++) {

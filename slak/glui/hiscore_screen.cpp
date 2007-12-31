@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <sstream>
 #include <SDL.h>
 #include <SDL_ttf.h>
@@ -10,8 +29,8 @@
 
 using namespace slak::glui;
 
-HiScoreScreen::HiScoreScreen(HiScoreTable * t, unsigned int leave, std::string fontname) 
-	: table(t), 
+HiScoreScreen::HiScoreScreen(HiScoreTable * t, unsigned int leave, std::string fontname)
+	: table(t),
 	  leave_message(leave),
 	  cursor_pulse(cursor_delay)
 {
@@ -48,7 +67,7 @@ HiScoreScreen::HiScoreScreen(HiScoreTable * t, unsigned int leave, std::string f
 		labl->align = Label::ALIGN_CENTER;
 		overlays.push_back(labl);
 		nameLabels.push_back(labl);
-		
+
 		labl = new Label(fontname,32);
 		labl->x = x_scores;
 		labl->y = y;
@@ -66,11 +85,11 @@ bool HiScoreScreen::handle(SDL_Event& ev)
 	switch(ev.type) {
 	case SDL_KEYDOWN:
 		if (table->last_record) {
-			if ((ev.key.keysym.sym>='0' 
+			if ((ev.key.keysym.sym>='0'
 			     && ev.key.keysym.sym<='9')
-			    ||(ev.key.keysym.sym>='a' 
+			    ||(ev.key.keysym.sym>='a'
 			       && ev.key.keysym.sym<='z')
-			    ||(ev.key.keysym.sym>='A' 
+			    ||(ev.key.keysym.sym>='A'
 			       && ev.key.keysym.sym<='Z')) {
 				if (table->last_record->cursor < 4) {
 					table->last_record ->
@@ -80,7 +99,7 @@ bool HiScoreScreen::handle(SDL_Event& ev)
 				}
 				return true;
 
-			} 
+			}
 
 			switch(ev.key.keysym.sym) {
 			case SDLK_RETURN:
@@ -90,7 +109,7 @@ bool HiScoreScreen::handle(SDL_Event& ev)
 					table->last_record->name[--table->last_record->cursor] = '.';
 				return true;
 			}
-		} else 
+		} else
 			goto leave_screen;
 		break;
 

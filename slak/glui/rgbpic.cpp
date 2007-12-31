@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -19,8 +38,8 @@ RGBPic::RGBPic(std::string fname)
 	maxt = (float)(pic->h)/(float)texh;
 }
 
-void slak::glui::sdl2glPixelParams(SDL_PixelFormat * sdlfmt, 
-		       unsigned int& format, 
+void slak::glui::sdl2glPixelParams(SDL_PixelFormat * sdlfmt,
+		       unsigned int& format,
 		       unsigned int& type)
 {
 	if (!sdlfmt->Amask) {
@@ -58,14 +77,14 @@ void RGBPic::draw()
 				     NULL);
 
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pic->w, pic->h, 
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pic->w, pic->h,
 					fmt, tp, pic->pixels);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, 
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
 					GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, 
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
 					GL_NEAREST);
 			glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-		} else 
+		} else
 			use_texture = false;
 		inited_gfx = true;
 	}
@@ -78,16 +97,16 @@ void RGBPic::draw()
 		glBegin(GL_QUADS);
 
 		glTexCoord2f(0,maxt);
-		glVertex2i(x,y); 
+		glVertex2i(x,y);
 
 		glTexCoord2f(0,0);
-		glVertex2i(x,y+pic->h); 
+		glVertex2i(x,y+pic->h);
 
 		glTexCoord2f(maxs,0);
-		glVertex2i(x+pic->w,y+pic->h); 
+		glVertex2i(x+pic->w,y+pic->h);
 
 		glTexCoord2f(maxs,maxt);
-		glVertex2i(x+pic->w,y); 
+		glVertex2i(x+pic->w,y);
 
 		glEnd();
 
@@ -96,8 +115,8 @@ void RGBPic::draw()
 		glRasterPos2i(x,y+pic->h);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glPixelZoom(1, -1);
-		glDrawPixels(pic->w, pic->h, GL_BGR, 
-			     GL_UNSIGNED_BYTE, 
+		glDrawPixels(pic->w, pic->h, GL_BGR,
+			     GL_UNSIGNED_BYTE,
 			     pic->pixels);
 	}
 }

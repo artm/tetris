@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <assert.h>
 #include "field.h"
 
@@ -12,7 +31,7 @@ bool Field::drop(const Tetrad& f)
 	int nx, ny;
 
 	// if there was a block falling - render it into the field
-	if (!falling.empty()) 
+	if (!falling.empty())
 		renderFalling();
 
 	// find where to start
@@ -20,8 +39,8 @@ bool Field::drop(const Tetrad& f)
 	nx = (width-f.width)/2;
 
 	// and actually place the block there.
-	// even if we'll return false (collision) 
-	// we have to place the block so it'll be 
+	// even if we'll return false (collision)
+	// we have to place the block so it'll be
 	// drawn.
 	falling = f;
 	x = nx;
@@ -63,9 +82,9 @@ square_state Field::sq(int i, int j) const
 	assert(j<height);
 
 	// if the square is empty in or is outside the falling tetrad...
-	if (falling.empty() 
-	    || (i < x) || (i >= x+falling.width) 
-	    || (j < y) || (j >= y+falling.height) 
+	if (falling.empty()
+	    || (i < x) || (i >= x+falling.width)
+	    || (j < y) || (j >= y+falling.height)
 	    || (falling.sq(i-x,j-y) == EMPTY))
 	  // return its colour in the field
 		return Tetrad::sq(i,j);
@@ -80,9 +99,9 @@ bool Field::rotateFalling()
 	Tetrad rot = falling.rotate();
   // but now we have to find the new coordinates of the falling
 	// recenter
-	int cx = x + falling.cx, 
+	int cx = x + falling.cx,
 	    cy = y + falling.cy;
-	int nx = cx - rot.cx, 
+	int nx = cx - rot.cx,
 	    ny = cy - rot.cy;
   // if at Field top - re-fit vertically
 	if (ny+rot.height > height)

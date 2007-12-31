@@ -1,3 +1,22 @@
+/*
+ * slak-games: simple SDL+OpenGL based games
+ * Copyright (C) 2006-2008 Artem Baguinski <femistofel@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
 #include <cstring>
 #include <algorithm>
 #include "tetris.h"
@@ -9,10 +28,10 @@ using namespace slak::tetris;
 const int Game::score_for_clear[] =
 { 40, 100, 300, 1200 };
 
-Game::Game() : 
+Game::Game() :
 	ticks_per_fast_fall(1),
 	ticks_per_strobe_fx(30),
-	field(10,16), 
+	field(10,16),
 	sm(NULL),
 	state(INIT_STATE),
 	hi_scores(10)
@@ -25,8 +44,8 @@ void Game::dropNextTetrad()
 	        // reset can fast fall
 		can_fast_fall = true;
 		// prepare next block
-		nextTetrad = Tetrad::make(); 
-	} else 
+		nextTetrad = Tetrad::make();
+	} else
 	  // if it's not possible - game over
 		enter(GAME_OVER_STATE);
 }
@@ -84,7 +103,7 @@ void Game::fastFallTick()
 {
 	fall_ticks -- ;
 	if (fall_ticks<=0) {
-		if (!field.moveFalling(0,-1)) 
+		if (!field.moveFalling(0,-1))
 			enter(NORMAL_STATE);
 		else
 			fall_ticks = ticks_per_fast_fall;
@@ -107,12 +126,12 @@ void Game::enter(game_state st)
         // don't bother if already in that state
 	if (state == st)
 		return;
-	
+
 	// requested the impossible
 	if (st == FAST_FALL_STATE && !can_fast_fall) return;
 
 	state = st;
-	// push state changed event for the application object 
+	// push state changed event for the application object
 	// to react on...
 	slak::glui::App::push(TetrisApp::STATE_CHANGED,NULL,NULL);
 
