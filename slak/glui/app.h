@@ -1,0 +1,90 @@
+#ifndef slak_glui_app_h
+#define slak_glui_app_h
+
+#include <map>
+#include <string>
+#include <assert.h>
+#include <SDL.h>
+
+namespace slak {
+	namespace glui {
+		struct Screen;
+
+
+		struct App {
+
+		  // Base event ID for application class specific events
+			static const int APP_EV_BASE = 100;
+		  // Quit request
+			static const int QUIT = APP_EV_BASE;
+		  // Base event ID for derived application specific events
+			static const int USER_APP_EV_BASE = 500;
+		  // Base event ID for automatically allocated event IDs
+			static const int AUTO_ALLOC_EV_BASE = 50000;
+
+		  // singleton 
+			static App * theApp;
+
+		  // SDL screen or window 
+			SDL_Surface * sdl_screen;
+		  
+			Screen * cur_screen;
+		  // screenshot counter
+			int printed;
+		  // when false - main loop will exit
+			bool go_on;
+
+		  // names of user defined events
+			static std::map<std::string, int> user_event_dict;
+		  // id of the next user event
+			static int free_event_id;
+
+			App(int width, int height, 
+				slak::glui::Screen * start_screen);
+		  // switch screen
+			void setScreen(Screen * s);
+		  // run the game
+			void run();
+		  // take a screen shot
+			void printScreen();
+
+		  // handle event (to be overloaded)
+		  // return true if handled (and should be discarded)
+			virtual bool handle(SDL_Event& ev); 
+
+		  // get event id by name
+			static int eventId(std::string name);
+
+		  // push (queue) an event by code. data1/2 are event
+		  // dependent pointers, if delay > 0 event will fire 
+		  // in the future
+			static SDL_TimerID push(int code, void*data1=NULL, 
+						void*data2=NULL, 
+						unsigned int delay = 0);
+		  // same as above but event is designated by name
+			static SDL_TimerID push(std::string event_name, 
+						void*data1=NULL, 
+						void*data2=NULL, 
+						unsigned int delay = 0);
+		  // post a periodic event that will fire every delay ms
+			static SDL_TimerID loop(int code, void*data1, 
+						void*data2, 
+						unsigned int delay);
+
+			static int getScreenWidth() { 
+				assert(theApp);
+				assert(theApp->sdl_screen);
+				return theApp->sdl_screen->w;
+			}
+			static int getScreenHeight() { 
+				assert(theApp);
+				assert(theApp->sdl_screen);
+				return theApp->sdl_screen->h;
+			}
+		};
+	}
+}
+
+
+#endif
+
