@@ -46,6 +46,9 @@ tidy:
 	rm -f *.o
 	rm -f `find . -name "*~"`
 
+clean: tidy
+	rm -f tetris
+
 install: tetris
 	install -d $(DESTDIR)$(bin_prefix)
 	install tetris $(DESTDIR)$(bin_prefix)
