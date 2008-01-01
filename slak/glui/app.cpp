@@ -60,7 +60,7 @@ App::App(int width, int height, Screen * start_screen)
 
 
 	sdl_screen = SDL_SetVideoMode(width, height, 32,
-				      SDL_OPENGL/*|SDL_FULLSCREEN*/);
+				      SDL_OPENGL|SDL_FULLSCREEN);
 	if (sdl_screen == NULL) {
 		std::cerr << "Error setting video mode: " << SDL_GetError();
 		exit(1);
