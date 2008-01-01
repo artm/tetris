@@ -39,6 +39,25 @@ VPATH = slak/glui:slak/tetris
 
 all: tetris
 
+DEPS = $(GLUI_OBJS:.o=.P) $(TETRIS_OBJS:.o=.P)
+-include $(DEPS)
+
+$(GLUI_OBJS) $(TETRIS_OBJS): Makefile
+
+#
+# Combining dependency generation with compilation We ask g++ to
+# generate deps to .d file then filter it into .P file to avoid "No
+# rule to make target..." errors.
+#
+# see: http://make.paulandlesley.org/autodep.html
+#
+%.o : %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MD -c -o $@ $<
+	@cp $*.d $*.P; \
+	sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' \
+	    -e '/^$$/ d' -e 's/$$/ :/' < $*.d >> $*.P; \
+	rm -f $*.d
+
 tetris: $(GLUI_OBJS) $(TETRIS_OBJS)
 	g++ -o $@ $^ $(LINKFLAGS)
 
