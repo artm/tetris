@@ -29,11 +29,11 @@
 
 using namespace slak::glui;
 
-HiScoreScreen::HiScoreScreen(HiScoreTable * t, unsigned int leave, std::string fontname)
-	: table(t),
-	  leave_message(leave),
-	  cursor_pulse(cursor_delay)
+void HiScoreScreen::init(HiScoreTable * t, unsigned int leave, std::string fontname)
 {
+	table = t;
+	leave_message = leave;
+
 	int x_nums=-1, x_names, x_scores, y;
 	for(int i = 0; i < table->records.size(); i++) {
 		int w,h;

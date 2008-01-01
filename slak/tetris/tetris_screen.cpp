@@ -38,9 +38,9 @@ GameScreen::GameScreen(Game * game)
 	: game(game), renderer(game), priv(new GameScreenPriv())
 {
   // add overlays
-	overlays.push_back(new RGBPic("media/bitmaps/tetris-main.bmp"));
+	overlays.push_back(new RGBPic(TetrisApp::data_file("bitmaps/tetris-main.bmp")));
 	overlays.push_back(&renderer);
-	RGBPic * gameover = new RGBPic("media/bitmaps/game-over.png");
+	RGBPic * gameover = new RGBPic(TetrisApp::data_file("bitmaps/game-over.png"));
 	gameover->x = App::getScreenWidth()/2 - gameover->pic->w/2;
 	gameover->y = App::getScreenHeight()/2 - gameover->pic->h/2;
 	gameover_toggle.kid = gameover;

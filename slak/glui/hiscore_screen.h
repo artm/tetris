@@ -36,7 +36,8 @@ namespace slak {
 
 			std::vector<Label*> nameLabels, scoreLabels;
 
-			HiScoreScreen(HiScoreTable * t, unsigned int leave_message, std::string fontname);
+                        HiScoreScreen() : cursor_pulse(cursor_delay), table(NULL) {}
+			void init(HiScoreTable * t, unsigned int leave_message, std::string fontname);
 			virtual bool handle(SDL_Event& ev);
 			virtual void draw();
 		};

@@ -21,6 +21,7 @@
 #include <iostream>
 
 #include "soundm.h"
+#include "tetris_app.h"
 
 using namespace slak::tetris;
 
@@ -32,26 +33,6 @@ SoundManager::SoundManager()
 		exit(1);
 	}
 
-  // load samples, this is tetris specific, the class is intended to be
-  // made generic and initialized from outside later.
-	char* map[][2] = {
-		{"click", "media/sound/tetris-click.wav"},
-		{"woosh", "media/sound/tetris-woosh.wav"},
-		{"snap",  "media/sound/tetris-snap.wav"},
-		{"tada",  "media/sound/tetris-tada.wav"},
-	};
-	int n = sizeof(map)/sizeof(char*[2]);
-
-	for(int i=0; i<n; i++) {
-		Mix_Chunk* sample = Mix_LoadWAV(map[i][1]);
-		if (sample)
-			samples[map[i][0]] = sample;
-		else {
-			std::cerr << "Can't open sample " <<
-				map[i][1] << ":" <<
-				SDL_GetError() << "\n";
-		}
-	}
 }
 
 void SoundManager::play(std::string tag)

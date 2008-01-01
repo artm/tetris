@@ -20,6 +20,8 @@
 #ifndef slak_tetris_app_h
 #define slak_tetris_app_h
 
+#include "boost/filesystem/convenience.hpp"
+
 #include <string>
 #include "slak/glui/app.h"
 #include "tetris.h"
@@ -31,7 +33,7 @@
 namespace slak {
 	namespace tetris {
 		struct TetrisApp : slak::glui::App {
-		  // Game logic
+			// Game logic
 			Game tetris;
 			// sound manager
 			SoundManager soundm;
@@ -53,7 +55,12 @@ namespace slak {
 			// overloaded event handler
 			virtual bool handle(SDL_Event& ev);
 
-			static const std::string fontname;
+                        static boost::filesystem::path data_dir;
+			static std::string data_file(std::string rel_path) {
+				return (data_dir / boost::filesystem::path(rel_path)).file_string();
+			}
+                        static std::string fontname;
+                        static boost::filesystem::path find_data_dir();
 		};
 	}
 }

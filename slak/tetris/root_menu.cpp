@@ -31,7 +31,7 @@ using namespace slak::glui;
 RootMenu::RootMenu()
 {
   // just setup a background
-	overlays.push_back(new RGBPic("media/bitmaps/tetris-menu.bmp"));
+	overlays.push_back(new RGBPic(TetrisApp::data_file("bitmaps/tetris-menu.bmp")));
   // and ortho projection
 	modes.push_back(new OrthoMode);
 }

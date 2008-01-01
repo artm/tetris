@@ -53,8 +53,13 @@ int main(int argc,char* argv[])
 	SDL_EnableKeyRepeat(250, 50);
 
 	// start tetris
-	slak::tetris::TetrisApp app(1024, 768);
-	app.run();
+	try {
+		slak::tetris::TetrisApp app(1024, 768);
+		app.run();
+	} catch (std::string& s) {
+		std::cout << "Exception: " << s << std::endl;
+		exit(1);
+	}
 
 	exit(0);
 }

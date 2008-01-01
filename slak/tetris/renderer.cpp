@@ -77,8 +77,8 @@ void Renderer::loadTextures()
 	glGenTextures(N_STATES-1, (GLuint*)texture_ids);
 	for(int i=1; i<N_STATES; i++) {
 		std::string fname =
-			std::string("media/bitmaps/tetris-block-") +
-			color_names[i] + ".png";
+			TetrisApp::data_file(std::string("bitmaps/tetris-block-") +
+				  color_names[i] + ".png");
 		SDL_Surface * img = IMG_Load(fname.c_str());
 		assert(img);
 		glBindTexture(GL_TEXTURE_2D, texture_ids[i]);
