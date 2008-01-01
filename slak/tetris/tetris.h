@@ -20,9 +20,10 @@
 #ifndef slak_tetris_h
 #define slak_tetris_h
 
-#include "field.h"
-#include "soundm.h"
+#include "slak/glui/soundm.h"
 #include "slak/glui/hiscore_table.h"
+
+#include "field.h"
 
 namespace slak {
 
@@ -70,7 +71,7 @@ namespace slak {
 			Tetrad nextTetrad;
 
 		  // obvious...
-			SoundManager * sm;
+                        slak::glui::SoundManager * sm;
 		  // hi scores (data structure)
 			slak::glui::HiScoreTable hi_scores;
 
@@ -113,7 +114,7 @@ namespace slak {
 				can_fast_fall = true;
 			}
 
-			void setSoundManager(SoundManager*sm) {
+			void setSoundManager(slak::glui::SoundManager*sm) {
 				this->sm = sm;
 			}
 		};

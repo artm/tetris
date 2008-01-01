@@ -23,11 +23,13 @@
 #include "boost/filesystem/convenience.hpp"
 
 #include <string>
+
 #include "slak/glui/app.h"
-#include "tetris.h"
-#include "soundm.h"
-#include "tetris_screen.h"
+#include "slak/glui/soundm.h"
 #include "slak/glui/hiscore_screen.h"
+
+#include "tetris.h"
+#include "tetris_screen.h"
 #include "root_menu.h"
 
 namespace slak {
@@ -36,7 +38,7 @@ namespace slak {
 			// Game logic
 			Game tetris;
 			// sound manager
-			SoundManager soundm;
+                        slak::glui::SoundManager soundm;
 
 			// game screens
 			GameScreen game_screen;

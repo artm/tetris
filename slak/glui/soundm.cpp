@@ -17,28 +17,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-#ifndef slak_soundm_h
-#define slak_soundm_h
-
-#include <string>
-#include <map>
 #include <SDL_mixer.h>
+#include <iostream>
 
-namespace slak {
-	namespace tetris {
+#include "soundm.h"
 
-	  // SDL_mixer based sound manager
-		struct SoundManager {
-		  // tagged samples map
-			std::map<std::string, Mix_Chunk*> samples;
+using namespace slak::glui;
 
-			SoundManager();
-			~SoundManager();
-		  // play sample by tag (channel will be autoallocated)
-			void play(std::string tag);
-		};
-
+SoundManager::SoundManager()
+{
+	// init audio device
+	if (Mix_OpenAudio(44100, AUDIO_S16, 1, 4096) < 0) {
+		std::cerr << "SDL_mixer error: " << SDL_GetError() << "\n";
+		exit(1);
 	}
+
 }
 
-#endif
+void SoundManager::play(std::string tag)
+{
+	// don't crash when called with non existent tag
+	if(samples.find(tag) != samples.end()) {
+		Mix_PlayChannel(-1,samples[tag],0);
+	} else
+		std::cerr << "Unknown sound tag: " << tag << "\n";
+}
+
+SoundManager::~SoundManager()
+{
+	Mix_CloseAudio();
+}
